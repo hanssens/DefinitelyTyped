@@ -451,8 +451,6 @@ declare namespace angular {
      * see https://docs.angularjs.org/api/ng/type/$rootScope.Scope and https://docs.angularjs.org/api/ng/service/$rootScope
      */
     interface IRootScopeService {
-        [index: string]: any;
-
         $apply(): any;
         $apply(exp: string): any;
         $apply(exp: (scope: IScope) => any): any;
@@ -1038,6 +1036,12 @@ declare namespace angular {
          */
         defer<T>(): IDeferred<T>;
         /**
+         * Returns a promise that resolves or rejects as soon as one of those promises resolves or rejects, with the value or reason from that promise.
+         *
+         * @param promises A list or hash of promises.
+         */
+        race<T>(promises: Array<IPromise<T>> | {[key: string]: IPromise<T>}): IPromise<T>;
+        /**
          * Creates a promise that is resolved as rejected with the specified reason. This api should be used to forward rejection in a chain of promises. If you are dealing with the last promise in a promise chain, you don't need to worry about it.
          *
          * When comparing deferreds/promises to the familiar behavior of try/catch/throw, think of reject as the throw keyword in JavaScript. This also means that if you "catch" an error via a promise error callback and you want to forward the error to the promise derived from the current promise, you have to "rethrow" the error by returning a rejection constructed via reject.
@@ -1474,6 +1478,12 @@ declare namespace angular {
          * See [XMLHttpRequest.responseType]https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#xmlhttprequest-responsetype
          */
         responseType?: string;
+
+        /**
+         * Name of the parameter added (by AngularJS) to the request to specify the name (in the server response) of the JSON-P callback to invoke.
+         * If unspecified, $http.defaults.jsonpCallbackParam will be used by default. This property is only applicable to JSON-P requests.
+         */
+        jsonpCallbackParam?: string;
     }
 
     /**

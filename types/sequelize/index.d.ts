@@ -2190,6 +2190,15 @@ declare namespace sequelize {
 
     }
 
+    interface EmptyResultError extends BaseError {
+
+        /**
+         * Thrown when a record was not found, Usually used with rejectOnEmpty mode (see message for details)
+         */
+        new (parent: Error): EmptyResultError;
+
+    }
+
     /**
      * Sequelize provides a host of custom error classes, to allow you to do easier debugging. All of these errors
      * are exposed on the sequelize object and the sequelize constructor. All sequelize errors inherit from the
@@ -2211,6 +2220,7 @@ declare namespace sequelize {
         HostNotReachableError: HostNotReachableError;
         InvalidConnectionError: InvalidConnectionError;
         ConnectionTimedOutError: ConnectionTimedOutError;
+        EmptyResultError: EmptyResultError;
     }
 
     //
@@ -3188,7 +3198,7 @@ declare namespace sequelize {
     /**
          * Shortcut for types used in FindOptions.attributes
          */
-    type FindOptionsAttributesArray = Array<string | [string, string] | fn | [fn, string] | cast | [cast, string]>;
+    type FindOptionsAttributesArray = Array<string | literal | [string, string] | fn | [fn, string] | cast | [cast, string] | [literal, string]>;
 
     /**
 * Options that are passed to any model creating a SELECT query
@@ -3275,6 +3285,11 @@ declare namespace sequelize {
          * Prevents a subquery on the main table when using include
          */
         subQuery?: boolean;
+
+        /**
+         * Throw EmptyResultError if a record is not found
+         */
+        rejectOnEmpty?: boolean;
     }
 
     type AnyFindOptions = FindOptions<any>;
@@ -3900,7 +3915,7 @@ declare namespace sequelize {
              * A more performant findOrCreate that will not work under a transaction (at least not in postgres)
              * Will execute a find call, if empty then attempt to create, if unique constraint then attempt to find again
              */
-        findCreateFind<TCustomAttributes>(options: FindCreateFindOptions<TAttributes & TCustomAttributes>): Promise<TInstance>;
+        findCreateFind<TCustomAttributes>(options: FindCreateFindOptions<TAttributes & TCustomAttributes>): Promise<[TInstance, boolean]>;
 
         /**
  * Insert or update a single row. An update will be executed if a row which matches the supplied values on
@@ -4750,7 +4765,7 @@ declare namespace sequelize {
         /**
          * only allow uuids
          */
-        isUUID?: number | { msg: string, args: number };
+        isUUID?: 3|4|5|"3"|"4"|"5"|"all" | { msg: string, args: number };
 
         /**
          * only allow date strings
@@ -5079,6 +5094,12 @@ declare namespace sequelize {
          */
         validate?: DefineValidateOptions;
 
+        /**
+         * Enable optimistic locking.  When enabled, sequelize will add a version count attribute
+         * to the model and throw an OptimisticLockingError error when stale instances are saved.
+         * Set to true or a string with the attribute name you want to use to enable.
+         */
+        version?: boolean | string;
     }
 
     /**

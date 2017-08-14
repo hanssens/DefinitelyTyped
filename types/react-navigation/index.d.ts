@@ -6,6 +6,8 @@
 //                 abrahambotros <https://github.com/abrahambotros>
 //                 petejkim <https://github.com/petejkim>
 //                 Kyle Roach <https://github.com/iRoachie>
+//                 phanalpha <https://github.com/phanalpha>
+//                 charlesfamu <https://github.com/charlesfamu>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 // TypeScript Version: 2.3
 
@@ -87,7 +89,7 @@ export type NavigationLeafRoute<Params> = {
    * Params passed to this route when navigating to it,
    * e.g. `{ car_id: 123 }` in a route that displays a car.
    */
-  params?: Params,
+  params: Params,
 };
 
 export type NavigationStateRoute<NavigationLeafRouteParams> = NavigationLeafRoute<NavigationLeafRouteParams> & {
@@ -263,7 +265,7 @@ export type NavigationStackScreenOptions = NavigationScreenOptions & {
   headerTitleStyle?: Style,
   headerTintColor?: string,
   headerLeft?: React.ReactElement<any>,
-  headerBackTitle?: string,
+  headerBackTitle?: string | null,
   headerTruncatedBackTitle?: string,
   headerBackTitleStyle?: Style,
   headerPressColorAndroid?: string,
@@ -334,7 +336,7 @@ export type NavigationTabScreenOptions = NavigationScreenOptions & {
     | React.ReactElement<any>
     | ((options: { tintColor: (string | null), focused: boolean }) => (React.ReactElement<
       any
-    > | null)),
+    > | string | null)),
   tabBarVisible?: boolean,
 };
 
@@ -522,13 +524,17 @@ export function StackNavigator<T>(
   stackConfig?: StackNavigatorConfig,
 ): NavigationContainer;
 
+// DrawerItems
+export const DrawerItems: React.ComponentClass<any>;
+
+
 /**
  * Drawer Navigator
  */
 export interface DrawerViewConfig {
   drawerWidth: number,
   drawerPosition: 'left' | 'right',
-  contentComponent: React.ComponentClass<any>,
+  contentComponent: (props: any) => React.ReactElement<any> | React.ComponentClass<any>,
   contentOptions?: any,
   style?: ViewStyle,
 }
@@ -676,3 +682,22 @@ export interface NavigationScreenProps<Params> {
 /**
  * END CUSTOM CONVENIENCE INTERFACES
  */
+
+
+/*
+ * Header
+ */
+
+// src/views/HeaderBackButton.js
+
+export interface HeaderBackButtonProps {
+  onPress?: () => void,
+  pressColorAndroid?: string,
+  title?: string,
+  titleStyle?: TextStyle,
+  tintColor?: string,
+  truncatedTitle?: string,
+  width?: number,
+}
+
+export const HeaderBackButton: React.ComponentClass<HeaderBackButtonProps>;
