@@ -1,5 +1,3 @@
-/* tslint:disable */
-
 module AccordionComponent {
     $(function () {
         var sample = new ej.Accordion($("#basicAccordion"), {
@@ -59,7 +57,6 @@ module AutocompleteComponent{
 
 
 
-
 module Barcodecomponent {
     $(function () {
         var barcodesample = new ej.datavisualization.Barcode($("#Barcode"), {
@@ -76,6 +73,35 @@ module Bulletgraphcomponent {
     $(function () {
         var bulletsample = new ej.datavisualization.BulletGraph($("#BulletGraph"), {
             isResponsive: true,
+            load: function () {
+                var sender = $("#BulletGraph").data("ejBulletGraph");
+                var bulletTheme = (<any>window).themeStyle + (<any>window).themeColor + (<any>window).themeVarient;
+                if (bulletTheme) {
+                    switch (bulletTheme) {
+                        case "flatdark":
+                        case "flatazuredark":
+                        case "flatlimedark":
+                        case "flatsaffrondark":
+                        case "gradientdark":
+                        case "gradientazuredark":
+                        case "gradientlimedark":
+                        case "gradientsaffrondark":
+                        case "flathigh-contrast-01dark":
+                        case "flathigh-contrast-02dark":
+                            bulletTheme = "flatdark";
+                            break;
+                        case "flatoffice-365light":
+                        case "flatmateriallight":
+                            bulletTheme = "material";
+                            break;
+                        default:
+                           bulletTheme = "flatlight";
+                            break;
+                    }
+                    sender.model.theme = bulletTheme;
+                }
+
+            },
             tooltipSettings: { visible: true },
             quantitativeScaleSettings: {
                 featureMeasures: [{
@@ -166,7 +192,6 @@ module ChartComponent {
                 range: { min: 25, max: 50, interval: 5 },
                 labelFormat: "{value}%",
                 title: { text: "Efficiency" },
-
             },
             commonSeriesOptions:
 			{
@@ -181,35 +206,35 @@ module ChartComponent {
                     },
                     visible: true
                 },
-                 border : {width: 2}
+                 border : { width: 2 }
             },
             series:
-			[
-			    {
-                points: [{ x: 2005, y: 28 }, { x: 2006, y: 25 },{ x: 2007, y: 26 }, { x: 2008, y: 27 },
-						 { x: 2009, y: 32 }, { x: 2010, y: 35 }, { x: 2011, y: 30 }],
-                name: 'India'
+            [
+                {
+                    points: [{ x: 2005, y: 28 }, { x: 2006, y: 25 }, { x: 2007, y: 26 }, { x: 2008, y: 27 },
+                        { x: 2009, y: 32 }, { x: 2010, y: 35 }, { x: 2011, y: 30 }],
+                    name: 'India'
                 },
                 {
-                points: [{ x: 2005, y: 31 }, { x: 2006, y: 28 },{ x: 2007, y: 30 }, { x: 2008, y: 36 },
-						 { x: 2009, y: 36 }, { x: 2010, y: 39 }, { x: 2011, y: 37 }],
-                name: 'Germany'
-                },
-				{
-                points: [{ x: 2005, y: 36 }, { x: 2006, y: 32 },{ x: 2007, y: 34 }, { x: 2008, y: 41 },
-						 { x: 2009, y: 42 }, { x: 2010, y: 42 }, { x: 2011, y: 43 }],
-                name: 'England'
+                    points: [{ x: 2005, y: 31 }, { x: 2006, y: 28 }, { x: 2007, y: 30 }, { x: 2008, y: 36 },
+                        { x: 2009, y: 36 }, { x: 2010, y: 39 }, { x: 2011, y: 37 }],
+                    name: 'Germany'
                 },
                 {
-                points: [{ x: 2005, y: 39 }, { x: 2006, y: 36 },{ x: 2007, y: 40 }, { x: 2008, y: 44 },
-						 { x: 2009, y: 45 }, { x: 2010, y: 48 }, { x: 2011, y: 46 }],
-                name: 'France'
-				}
+                    points: [{ x: 2005, y: 36 }, { x: 2006, y: 32 }, { x: 2007, y: 34 }, { x: 2008, y: 41 },
+                        { x: 2009, y: 42 }, { x: 2010, y: 42 }, { x: 2011, y: 43 }],
+                    name: 'England'
+                },
+                {
+                    points: [{ x: 2005, y: 39 }, { x: 2006, y: 36 }, { x: 2007, y: 40 }, { x: 2008, y: 44 },
+                        { x: 2009, y: 45 }, { x: 2010, y: 48 }, { x: 2011, y: 46 }],
+                    name: 'France'
+                }
             ],
             isResponsive: true,
             load: function () {
                 var sender = $("#Chart").data("ejChart");
-                if (!!window.orientation && sender) {           //to modify chart properties for mobile view
+                if (!!window.orientation && sender) { //to modify chart properties for mobile view
                     var model = sender.model,
                         seriesLength = model.series.length;
                     model.legend.visible = false;
@@ -232,14 +257,52 @@ module ChartComponent {
                     model.primaryYAxis.labelIntersectAction = "rotate45";
                     model.primaryYAxis.edgeLabelPlacement = "hide";
                 }
+                var theme = (<any>window).themeStyle + (<any>window).themeColor + (<any>window).themeVarient;
+                if (theme) {
+                    switch (theme) {
+                        case "flatdark":
+                        case "flatazuredark":
+                        case "flatlimedark":
+                        case "flatsaffrondark":
+                            theme = "flatdark";
+                            break;
+                        case "gradientlight":
+                        case "gradientazurelight":
+                        case "gradientlimelight":
+                        case "gradientsaffronlight":
+                            theme = "gradientlight";
+                            break;
+                        case "gradientdark":
+                        case "gradientazuredark":
+                        case "gradientlimedark":
+                        case "gradientsaffrondark":
+                            theme = "gradientdark";
+                            break;
+                        case "flatbootstraplight":
+                            theme = "bootstrap";
+                            break;
+                        case "flathigh-contrast-01dark":
+                        case "flathigh-contrast-02dark":
+                            theme = "high-contrast-01";
+                            break;
+                        case "flatmateriallight":
+                        case "flatoffice-365light":
+                            theme = "material";
+                            break;
+
+                        default:
+                            theme = "flatlight";
+                            break;
+                    }
+                    sender.model.theme = theme;
+                }
             },
             title: { text: 'Efficiency of oil-fired power production' },
             size: { height: "600" },
-            legend: { visible: true}
+            legend: { visible: true},
         });
     });
 }
-
 
 
 
@@ -297,7 +360,6 @@ module circulargaugecomponent {
 
 
 
-
 module ColorPickerComponent {
     $(function () {
         var colorSample = new ej.ColorPicker($("#colorpick"), {
@@ -306,6 +368,26 @@ module ColorPickerComponent {
     });
 }
 
+
+
+
+module ComboBoxComponent{
+    var BikeList = [
+        { empid: "bk1", text: "Apache RTR" }, { empid: "bk2", text: "CBR 150-R" }, { empid: "bk3", text: "CBZ Xtreme" },
+        { empid: "bk4", text: "Discover" }, { empid: "bk5", text: "Dazzler" }, { empid: "bk6", text: "Flame" },
+        { empid: "bk7", text: "Fazzer" }, { empid: "bk8", text: "FZ-S" }, { empid: "bk9", text: "Pulsar" },
+        { empid: "bk10", text: "Shine" }, { empid: "bk11", text: "R15" }, { empid: "bk12", text: "Unicorn" }
+    ];
+    $(function () {
+        var comboboxInstance =new ej.ComboBox($("#selectCar"), {
+            width: "100%",
+            placeholder: "Select a Bike",
+			fields: { text: "text", value: "empid" },
+            dataSource: BikeList,
+            autofill: true
+        });
+    });
+}
 
 
 
@@ -387,7 +469,6 @@ $(function () {
             createConnector({ name: "connector6", sourceNode: "Project", targetNode: "Resources", labels: [createLabel({ "text": "No" })] })
         ]
     });
-
 });
 
 function createNode(option: ej.datavisualization.Diagram.Node) {
@@ -411,7 +492,6 @@ function createConnector(option: ej.datavisualization.Diagram.Connector) {
 function createLabel(options : any) {
     return options;
 }
-
 
 
 module DialogComponent {
@@ -465,7 +545,6 @@ module digitalgaugecomponent {
 
 
 
-
 module DropDownListComponent {
     var BikeList = [
         { empid: "bk1", text: "Apache RTR" }, { empid: "bk2", text: "CBR 150-R" }, { empid: "bk3", text: "CBZ Xtreme" },
@@ -493,9 +572,7 @@ module DropDownListComponent {
             showRoundedCorner: true
         });
     });
-
 }
-
 
 
 
@@ -535,8 +612,8 @@ module GanttComponent {
         durationMapping: "duration",
         endDateMapping: "endDate",
         childMapping: "subtasks",
-        scheduleStartDate: "02/01/2014",
-        scheduleEndDate: "04/09/2014",
+        scheduleStartDate: "02/01/2017",
+        scheduleEndDate: "04/09/2017",
         //Resources mapping
         resourceInfoMapping: "resourceId",
         resourceNameMapping: "resourceName",
@@ -654,14 +731,10 @@ $(function () {
 
 
 
-declare var window:myWindow;
-export interface myWindow extends Window{
-kanbanData:any;
-}
 module KanbanComponent {
     $(function () {
         var sample = new ej.Kanban($("#Kanban"), {
-            dataSource: new ej.DataManager(<any>window["kanbanData"]).executeLocal(new ej.Query().take(20)),
+           dataSource: new ej.DataManager((<any>window).kanbanData).executeLocal(new ej.Query().take(20)),
             columns: [
                 { headerText: "Backlog", key: "Open" },
                 { headerText: "In Progress", key: "InProgress" },
@@ -679,8 +752,6 @@ module KanbanComponent {
         });
     });
 }
-
-
 
 
 module lineargaugecomponent {
@@ -710,8 +781,6 @@ module lineargaugecomponent {
         });
     });
 }
-
-
 
 
 
@@ -965,7 +1034,6 @@ module mapcomponenet {
 
 
 
-
 module MenuComponent {
     $(function () {
         var sample = new ej.Menu($("#syncfusionProducts"),{
@@ -982,17 +1050,9 @@ module MenuComponent {
             showSubLevelArrows: true,
             subMenuDirection: ej.Direction.Right,
             titleText: "Menu",
-
         });
     });
-
 }
-
-
-
-
-
-
 
 
 module NavigationDrawerComponent {
@@ -1033,7 +1093,7 @@ module PivotChartOlap {
     $(function () {
         var sample = new ej.PivotChart($("#PivotChart"),{
             dataSource: {
-			data: "http://bi.syncfusion.com/olap/msmdpump.dll",
+			data: "//bi.syncfusion.com/olap/msmdpump.dll",
 			catalog: "Adventure Works DW 2008 SE",
 			cube: "Adventure Works",
 			rows: [
@@ -1065,7 +1125,16 @@ module PivotChartOlap {
 		size: { height: "460px", width: "100%" },
 		primaryXAxis: { title: { text: "Date - Fiscal" }, labelRotation: 0 },
 		primaryYAxis: { title: { text: "Internet Sales Amount" } },
-		legend: { visible: true, rowCount: 2 }
+		legend: { visible: true, rowCount: 2 },
+        load: function () {
+                var PivotChart = (<any>window).themeStyle + (<any>window).themeColor + (<any>window).themeVarient;
+                PivotChart = PivotChart.toString();
+                if (PivotChart.indexOf("dark") > -1 || PivotChart.indexOf("contrast") > -1)
+                    PivotChart = "flatdark";
+                else
+                    PivotChart = "flatlight";
+                this.model.theme = PivotChart;
+            },
         });
     });
 }
@@ -1139,7 +1208,16 @@ module PivotChartRelational {
 		},
 		size: { height: "460px", width: "100%" },
 		primaryYAxis: { title: { text: "Amount" } },
-		legend: { visible: true }
+		legend: { visible: true },
+        load: function () {
+                var PivotChart = (<any>window).themeStyle + (<any>window).themeColor + (<any>window).themeVarient;
+                PivotChart = PivotChart.toString();
+                if (PivotChart.indexOf("dark") > -1 || PivotChart.indexOf("contrast") > -1)
+                    PivotChart = "flatdark";
+                else
+                    PivotChart = "flatlight";
+                this.model.theme = PivotChart;
+            },
         });
     });
 }
@@ -1151,7 +1229,7 @@ module PivotGaugeOlap {
     $(function () {
         var sample = new ej.PivotGauge($("#PivotGauge"),{
             dataSource: {
-				data: "http://bi.syncfusion.com/olap/msmdpump.dll",
+				data: "//bi.syncfusion.com/olap/msmdpump.dll",
 				catalog: "Adventure Works DW 2008 SE",
 				cube: "Adventure Works",
 				rows: [
@@ -1379,7 +1457,7 @@ module PivotGridOlap {
     $(function () {
         var sample = new ej.PivotGrid($("#PivotGrid"),{
             dataSource: {
-			data: "http://bi.syncfusion.com/olap/msmdpump.dll",
+			data: "//bi.syncfusion.com/olap/msmdpump.dll",
 			catalog: "Adventure Works DW 2008 SE",
 			cube: "Adventure Works",
 			rows: [
@@ -1477,7 +1555,6 @@ module PivotGridRelational {
         pivotTableFieldListID:"PivotSchemaDesigner"
         });
        $("#PivotSchemaDesigner").ejPivotSchemaDesigner();
-
     });
 }
 
@@ -1487,7 +1564,7 @@ module PivotTreeMap {
     $(function () {
         var sample = new ej.PivotTreeMap($("#PivotTreeMap"),{
             dataSource: {
-			data: "http://bi.syncfusion.com/olap/msmdpump.dll;Locale Identifier=1033;",
+			data: "//bi.syncfusion.com/olap/msmdpump.dll;Locale Identifier=1033;",
 			catalog: "Adventure Works DW 2008 SE",
 			cube: "Adventure Works",
 			rows: [
@@ -1617,8 +1694,6 @@ function redo(e: any) {
 }
 
 
-
-
 module RadialSliderComponent {
     $(function () {
         var radialsliderInstance = new ej.RadialSlider($("#radialSlider"), {
@@ -1650,6 +1725,66 @@ module rangecomponent {
                         fill: '#69D2E7'
                     }
                 ];
+            },
+            loaded: function () {
+                var sender = $("#RangeNavigator").data("ejRangeNavigator");
+                var theme = (<any>window).themeStyle + (<any>window).themeColor + (<any>window).themeVarient;
+                if (theme) {
+                    switch (theme) {
+                        case "flatazurelight":
+                            theme = "azurelight";
+                            break;
+                        case "flatlimelight":
+                            theme = "limelight";
+                            break;
+                        case "flatsaffronlight":
+                            theme = "saffronlight";
+                            break;
+                        case "gradientazurelight":
+                            theme = "gradientazure";
+                            break;
+                        case "gradientlimelight":
+                            theme = "gradientlime";
+                            break;
+                        case "gradientsaffronlight":
+                            theme = "gradientsaffron";
+                            break;
+                        case "flatazuredark":
+                            theme = "azuredark";
+                            break;
+                        case "flatlimedark":
+                            theme = "limedark";
+                            break;
+                        case "flatsaffrondark":
+                            theme = "saffrondark";
+                            break;
+                        case "gradientazuredark":
+                            theme = "gradientazuredark";
+                            break;
+                        case "gradientlimedark":
+                            theme = "gradientlimedark";
+                            break;
+                        case "gradientsaffrondark":
+                            theme = "gradientsaffrondark";
+                            break;
+                        case "flathigh-contrast-01dark":
+                            theme = "highcontrast01";
+                            break;
+                        case "flathigh-contrast-02dark":
+                            theme = "highcontrast02";
+                            break;
+                        case "flatmateriallight":
+                            theme = "material";
+                            break;
+                        case "flatoffice-365light":
+                            theme = "office";
+                            break;
+                        default:
+                            theme = "flatlight";
+                            break;
+                    }
+                    sender.model.theme = theme;
+                }
             }
 
         });
@@ -1735,18 +1870,16 @@ module RatingComponent {
             showTooltip: true
         });
     });
-
 }
 
 
 
 module ReportViewerComponent {
 	$(function () {
-		var report = new ej.ReportViewer($("#territoryReportViewer"), {
+        var report = new ej.ReportViewer($("#DefaultReportViewer"), {
 			reportServiceUrl: (<any>window).baseurl + 'api/ReportViewer',
-			reportServerUrl: 'http://mvc.syncfusion.com/reportserver',
 			processingMode: ej.ReportViewer.ProcessingMode.Remote,
-			reportPath: "/SSRSSamples2/Territory Sales new",
+            reportPath: "ConditionalFormating.rdl",
 			isResponsive: true
 		});
 	});
@@ -2428,8 +2561,8 @@ module RibbonComponent {
 function colorHandler(args:any) {
     (this._id.indexOf("fillcolor") != -1) ? $("#contenteditor").css('background-color', args.value) : document.execCommand('forecolor', false, args.value);
 }
-function onClick(args) {
-    var val, prop = args.text;
+function onClick(args:any) {
+    let val:any, prop = args.text;
     val = (ej.isNullOrUndefined(args.model.text)) ? args.model.activeText : args.model.text;
     if (action1.indexOf(val) != -1)
         $("#contenteditor").empty();
@@ -2442,10 +2575,6 @@ function onClick(args) {
     else
         $("#contenteditor").append("<p> Action: " + val + " Triggered </p>");
 }
-
-
-
-
 
 
 module RotatorComponent {
@@ -2792,9 +2921,6 @@ module piesparkline4 {
 
 
 
-
-
-
 module SplitterComponent {
     $(function () {
         var splitterInstance = new ej.Splitter($("#outterSpliter"), {
@@ -2838,7 +2964,6 @@ $(function () {
         });
     });
 }
-
 
 
 
@@ -2895,13 +3020,22 @@ module sunburstcomponent {
 			enableAnimation:false,
 			size:{height:"600"},
 			innerRadius:0.2,
+            load: function () {
+                var sender = $("#Sunburst").data("ejSunburstChart");
+                var SunBurstTheme = (<any>window).themeStyle + (<any>window).themeColor + (<any>window).themeVarient;
+                SunBurstTheme = SunBurstTheme.toString();
+                if (SunBurstTheme.indexOf("dark") > -1 || SunBurstTheme.indexOf("contrast") > -1)
+                    SunBurstTheme = "flatdark";
+                else
+                    SunBurstTheme = "flatlight";
+                sender.model.theme = SunBurstTheme;
+            },
 			title:{text:"Employees Count"},
 			zoomSettings:{enable:false},
-			legend:{visible:true,position:'top'}
+			legend:{visible:true,position:'top'},
         });
     });
 }
-
 
 
 
@@ -2921,7 +3055,6 @@ module TabComponent {
 
 
 module TagCloudComponent {
-
 
     var websiteCollection = [
         { text: "Google", url: "http://www.google.com", frequency: 12 },
@@ -2953,10 +3086,8 @@ module TagCloudComponent {
                 text: "text", url: "url", frequency: "frequency"
             }
         });
-
     });
 }
-
 
 
 module EditorComponent {
@@ -2992,9 +3123,6 @@ module EditorComponent {
 }
 
 
-
-
-
 module TileViewComponent {
     $(function () {
         var tile1 = new ej.Tile($("#tile1"), {
@@ -3007,7 +3135,6 @@ module TileViewComponent {
             imagePosition:"center",
 			tileSize:"small",
 			imageUrl:'content/images/tile/windows/alerts.png',
-
         });
 		var tile3 = new ej.Tile($("#tile3"), {
             imagePosition:"center",
@@ -3087,26 +3214,21 @@ module TimePickerComponent {
 
 
 module ToolbarComponent {
-
     $(function () {
         var sample = new ej.Toolbar($("#editingToolbar"),{
             width: "100%",
             cssClass: "gradient-lime",
             enableSeparator: true,
-
             isResponsive: true,
             orientation: ej.Orientation.Horizontal,
             showRoundedCorner: true
         });
     });
-
 }
 
 
 
-
 module TooltipComponent {
-
     $(function () {
 
         var sample1 = new ej.Tooltip($("#link1"),{
@@ -3205,7 +3327,6 @@ module TreeGridComponent {
 
 
 
-
 var population_data: Array<Object> = [
     { Continent: "Asia", Country: "Indonesia", Growth: 3, Population: 237641326 },
     { Continent: "Asia", Country: "Russia", Growth: 2, Population: 152518015 },
@@ -3246,8 +3367,6 @@ module treemapcomponent {
 
 
 
-
-
 module TreeViewComponent {
     $(function () {
         var tree = new ej.TreeView($("#treeView"), {
@@ -3282,7 +3401,6 @@ module UploadboxComponent {
     });
 
 }
-
 
 
 

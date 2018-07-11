@@ -1,3 +1,4 @@
+import * as JQuery from 'jquery';
 import * as Marionette from 'backbone.marionette';
 import * as Backbone from 'backbone';
 
@@ -7,6 +8,10 @@ class DestroyWarn extends Marionette.Behavior {
     // they will be overriden if you pass in an option with the same key
     defaults = {
         message: 'you are destroying!'
+    };
+
+    ui = {
+        destroy: '.foo'
     };
 
     // behaviors have events that are bound to the views DOM
@@ -59,12 +64,11 @@ class MyApplication extends Marionette.Application {
         this.layoutView.addRegion('main', this.mainRegion);
         this.layoutView.render();
         this.layoutView.showChildView('main', new MyView(new MyModel()));
-        let view: Backbone.View<Backbone.Model> = this.layoutView.getChildView('main');
-        let regions: {[key: string]: Marionette.Region} = this.layoutView.getRegions();
-        let region: Marionette.Region = this.layoutView.removeRegion('main');
-        let layout: Marionette.View<Backbone.Model> = this.layoutView.destroy();
+        const view: Backbone.View<Backbone.Model> = this.layoutView.getChildView('main');
+        const regions: {[key: string]: Marionette.Region} = this.layoutView.getRegions();
+        const region: Marionette.Region = this.layoutView.removeRegion('main');
+        const layout: Marionette.View<Backbone.Model> = this.layoutView.destroy();
 
-        let prefix: string;
         if (typeof this.layoutView.childViewEventPrefix === 'string') {
             this.layoutView.childViewEventPrefix;
         }
@@ -127,7 +131,7 @@ class MyView extends Marionette.View<MyModel> {
     }
 
     template() {
-        return '<h1>' + this.model.getName() + '</h1> <button class="destroy">Destroy Me</button>';
+        return `<h1>${this.model.getName()}</h1> <button class="destroy">Destroy Me</button>`;
     }
 }
 
@@ -216,12 +220,12 @@ function ApplicationTests() {
 
     app.start();
 
-    let view = new MyView(new MyModel());
+    const view = new MyView(new MyModel());
     app.mainRegion.show(view);
 }
 
 function ObjectTests() {
-    let obj = new MyObject();
+    const obj = new MyObject();
     console.log(obj.getOption('name'));
     obj.destroy('goodbye');
 }
@@ -238,7 +242,7 @@ function RegionTests() {
     myView = new MyView(new MyModel());
     app.mainRegion.show(myView, { preventDestroy: true });
 
-    let hasView: boolean = app.mainRegion.hasView();
+    const hasView: boolean = app.mainRegion.hasView();
 
     app.mainRegion.reset();
 
@@ -259,20 +263,26 @@ function RegionTests() {
     });
 }
 
+function BehaviorTest() {
+    const b = new DestroyWarn();
+    const uiHandle: JQuery = b.getUI('destroy');
+}
+
 function ViewTests() {
     const v = new MyView(new MyModel());
     const isDestroyed: boolean = v.isDestroyed();
     const isRendered: boolean = v.isRendered();
     const isAttached: boolean = v.isAttached();
     const vv: Marionette.View<Backbone.Model> = v.delegateEntityEvents();
+    const uiHandle: JQuery = v.getUI('destroy');
 }
 
 function CollectionViewTests() {
-    let cv = new MyCollectionView();
+    const cv = new MyCollectionView();
     cv.collection.add(new MyModel());
     app.mainRegion.show(cv);
     cv.emptyView = MyView;
-    let view: Marionette.CollectionView<MyModel, MyView> = cv.destroy();
+    const view: Marionette.CollectionView<MyModel, MyView> = cv.destroy();
 }
 
 class MyController {
@@ -282,8 +292,8 @@ class MyController {
 }
 
 function AppRouterTests() {
-    let myController = new MyController();
-    let router = new MyRouter();
+    const myController = new MyController();
+    const router = new MyRouter();
 
     router.appRoute('/foo', 'fooThat');
 
